@@ -1,10 +1,12 @@
 package net.therap.demo.iot.dbMappingProject.controller;
 
-import net.therap.demo.iot.dbMappingProject.model.IncontinenceMattData;
-import net.therap.demo.iot.dbMappingProject.model.SmartPlugData;
+import net.therap.demo.iot.dbMappingProject.commandObj.dataObj.IncontinenMattDataCmd;
+import net.therap.demo.iot.dbMappingProject.model.Device;
+import net.therap.demo.iot.dbMappingProject.model.data.IncontinenceMattData;
+import net.therap.demo.iot.dbMappingProject.service.DeviceService;
 import net.therap.demo.iot.dbMappingProject.service.IncontinenceMattDataService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,10 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class IncontinenceMatDataController {
 
     @Autowired
-    IncontinenceMattDataService incontinenceMattDataService;
+    private IncontinenceMattDataService incontinenceMattDataService;
 
-    @GetMapping("/saveImData")
-    public String saveSpData(@RequestBody IncontinenceMattData incontinenceMattData) {
+    @Autowired
+    private DeviceService deviceService;
+
+    @PostMapping("/saveImData")
+    public String saveImData(@RequestBody IncontinenMattDataCmd incontinenMattDataCmd) {
+
+        Device device = deviceService.findByMacAddress(incontinenMattDataCmd.getDeviceMacAddress());
+
+        IncontinenceMattData incontinenceMattData = new IncontinenceMattData();
+        incontinenceMattData.setCompanyName(incontinenMattDataCmd.getCompanyName());
+        incontinenceMattData.setStatus(incontinenMattDataCmd.getStatus());
+        incontinenceMattData.setDevice(device);
+
         incontinenceMattDataService.save(incontinenceMattData);
 
         return "saved successfully!";

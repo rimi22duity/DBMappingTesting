@@ -1,4 +1,6 @@
-package net.therap.demo.iot.dbMappingProject.model;
+package net.therap.demo.iot.dbMappingProject.model.data;
+
+import net.therap.demo.iot.dbMappingProject.model.Device;
 
 import javax.persistence.*;
 
@@ -7,15 +9,18 @@ import java.util.Objects;
 import static javax.persistence.GenerationType.AUTO;
 
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class DeviceData {
 
     @Id
     @GeneratedValue(strategy = AUTO)
     private long id;
 
-    private String deviceId;
-    private String deviceName;
+    private String companyName;
+
+    @ManyToOne
+    private Device device;
 
     public long getId() {
         return id;
@@ -25,20 +30,20 @@ public class DeviceData {
         this.id = id;
     }
 
-    public String getDeviceId() {
-        return deviceId;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
-    public String getDeviceName() {
-        return deviceName;
+    public Device getDevice() {
+        return device;
     }
 
-    public void setDeviceName(String deviceName) {
-        this.deviceName = deviceName;
+    public void setDevice(Device device) {
+        this.device = device;
     }
 
     @Override

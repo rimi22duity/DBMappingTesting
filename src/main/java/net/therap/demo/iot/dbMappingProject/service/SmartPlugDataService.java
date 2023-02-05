@@ -1,6 +1,6 @@
 package net.therap.demo.iot.dbMappingProject.service;
 
-import net.therap.demo.iot.dbMappingProject.model.SmartPlugData;
+import net.therap.demo.iot.dbMappingProject.model.data.SmartPlugData;
 import net.therap.demo.iot.dbMappingProject.repo.SmartPlugDataRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
